@@ -7,11 +7,67 @@
     <title>GW2 - Character Progression</title>
     <!-- <link rel="icon" href="./favicon.ico" type="image/x-icon"> -->
 
-    <!-- <link rel="stylesheet" href="./styles.css"> -->
-    <!-- <script defer src="./main.js"></script> -->
+    <!-- Common Styles -->
+    <link rel="stylesheet" href="./styles/common.css">
+
+    <!-- Section-specific Styles -->
+    <link rel="stylesheet" href="./styles/api-token.css">
+    <link rel="stylesheet" href="./styles/character-tracker.css">
+    <link rel="stylesheet" href="./styles/character-modal.css">
+
+    <!-- Scripts -->
+    <script defer src="./scripts/state.js"></script>
+    <script defer src="./scripts/api-token.js"></script>
+    <script defer src="./scripts/character-tracker.js"></script>
+    <script defer src="./scripts/character-modal.js"></script>
+    <script defer src="./scripts/main.js"></script>
 </head>
 
 <body>
+    <main>
+        <!-- API Key Input Section -->
+        <section id="api-token-section" class="hidden">
+            <h1>GW2 Character Tracker</h1>
+            <div class="api-input">
+                <label for="api-token">API Token:</label>
+                <input type="text" id="api-token" placeholder="Enter your API key">
+                <button id="save-api-token">Save Token</button>
+            </div>
+            <div id="api-message"></div>
+        </section>
+
+        <!-- Character Tracker Section -->
+        <section id="character-tracker-section" class="hidden">
+            <h2>Character Progression</h2>
+            <div id="tracked-characters">
+                <h3>Your Tracked Characters</h3>
+                <ul id="tracked-characters-list"></ul>
+                <button id="modify-character-tracking">Characters</button>
+            </div>
+        </section>
+
+        <!-- Character Selection Modal -->
+        <div id="character-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Manage Tracked Characters</h3>
+
+                <div class="character-lists">
+                    <!-- Tracked Characters Section -->
+                    <div class="character-list-section">
+                        <h4>Currently Tracked</h4>
+                        <ul id="tracked-characters-modal-list"></ul>
+                    </div>
+
+                    <!-- Available Characters Section -->
+                    <div class="character-list-section">
+                        <h4>Available Characters</h4>
+                        <ul id="available-characters-modal-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 
 </html>

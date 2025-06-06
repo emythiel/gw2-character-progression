@@ -1,0 +1,27 @@
+#api-token-section {
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: var(--bg-color);
+}
+
+.api-input {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#api-token {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+#api-message {
+    margin-top: 10px;
+    color: var(--danger-color);
+    min-height: 20px;
+}

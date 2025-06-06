@@ -1,0 +1,41 @@
+/* Add these to your existing character-modal.css */
+
+.character-lists {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.character-list-section {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.character-list-section h4 {
+    margin-top: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+
+#tracked-characters-modal-list,
+#available-characters-modal-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin: 10px 0;
+}
+
+#tracked-characters-modal-list li,
+#available-characters-modal-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#tracked-characters-modal-list li:last-child,
+#available-characters-modal-list li:last-child {
+    border-bottom: none;
+}
