@@ -1,6 +1,9 @@
 # GW2 Character Progression
 A super simple way to track some progress for Guild Wars 2 characters.
 
+Link:  
+**https://emythiel.github.io/gw2-character-progression/**
+
 I was too lazy to make a spreadsheet, so I logically spent more time and effort making this.
 
 ## Usage
@@ -19,3 +22,7 @@ Maps currently cannot be tracked via the API, and Story completion is a bit iffy
 
 ### *Everything is stored locally!*
 This uses the browsers local storage, so nothing is shared. It does mean that you'll lose all your stored information if you reset your browser or something.
+
+### Todo:
+- Ability to refresh API key to retrieve newly created characters
+- Ability to export/import data
