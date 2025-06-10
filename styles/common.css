@@ -5,6 +5,7 @@
     --border-color: #000000;
     --bg-section-color: #2e3244;
     --bg-color: #2d2f3b;
+    --accent: #f36666;
     --modal-bg: rgba(0,0,0,0.4);
 }
 
@@ -114,5 +115,5 @@ h1, h2 {
 }
 
 a {
-    color: rgb(243, 102, 102)
+    color: var(--accent);
 }

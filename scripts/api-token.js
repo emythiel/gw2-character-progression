@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const apiTokenInput = document.getElementById('api-token');
     const saveTokenBtn = document.getElementById('save-api-token');
     const messageDiv = document.getElementById('api-message');
+    const apiFetchMessage = document.getElementById('api-fetch-message')
 
     // Save token button event
     saveTokenBtn.addEventListener('click', handleSaveToken);
@@ -19,18 +20,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Attempt to fetch from GW2 API
         try {
-            showMessage('Fetching characters...');
+            //showMessage('Fetching characters...');
             const characters = await fetchCharacters(apiToken);
 
             // Show progress message
-            showMessage('Fetching character details...');
+            //showMessage('Fetching character details...');
 
             // Fetch additional information for each character
             const characterDetails = await fetchCharacterDetails(apiToken, characters);
 
+            // Preserve existing progression during update
+            const existingProgression = {...GW2ProgressTracker.data.progression};
+
             // Update state
             GW2ProgressTracker.setApiKey(apiToken);
             GW2ProgressTracker.setCharacters(characterDetails);
+
+            // Restore progression data
+            GW2ProgressTracker.data.progression = {...existingProgression};
+            GW2ProgressTracker.upgradeProgressionData(); // Ensure data matches new structure
 
             // Initialize progression data for new characters
             const staticData = GW2ProgressTracker.getStaticData();
@@ -38,12 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             for (const character of trackedCharacters) {
                 // Only initialize if no progression exists
-                if (!GW2ProgressTracker.getProgression(character) || Object.keys(GW2ProgressTracker.getProgression(character)).length === 0) {
+                if (!GW2ProgressTracker.getProgression(character)) {
                     initializeProgression(character, staticData);
                 }
             }
 
-            showMessage('API token and character details saved successfully!');
+            //showMessage('API token and character details saved successfully!');
             console.log(`Saved API Token: ${apiToken}`)
 
             // Hide token section and show character tracker
@@ -54,14 +62,75 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Refresh API data
+    async function refreshCharacters() {
+        const apiToken = GW2ProgressTracker.getApiKey();
+
+        showApiMessage('');
+
+        if (!apiToken) {
+            alert('No API Key found?');
+            return;
+        }
+
+        try {
+            // Fetch current characters
+            const characters = await fetchCharacters(apiToken);
+
+            // Fetch character details
+            const characterDetails = await fetchCharacterDetails(apiToken, characters);
+
+            // Preserve existing progression data
+            const existingProgression = {...GW2ProgressTracker.data.progression};
+            const existingCharacters = {...GW2ProgressTracker.getCharacters()};
+
+            // Merge characters - update existing and add new
+            const mergedCharacters = {...existingCharacters};
+            for (const [name, details] of Object.entries(characterDetails)) {
+                // If character exists, update details but keep name and progression
+                if (existingCharacters[name]) {
+                    mergedCharacters[name] = {
+                        ...existingCharacters[name],
+                        ...details,
+                        name // Ensure name doesn't change
+                    };
+                } else {
+                    // New character
+                    mergedCharacters[name] = details;
+                }
+            }
+
+            // Update state
+            GW2ProgressTracker.setCharacters(mergedCharacters);
+            GW2ProgressTracker.data.progresion = existingProgression;
+            GW2ProgressTracker.upgradeProgressionData();
+
+            alert('Characters refreshed successfully!');
+            return true;
+        } catch (error) {
+            console.error('Refresh failed:', error);
+            alert(`Refresh failed: ${error.message}`);
+            return false;
+        }
+    }
+    // Expose for progression tracker
+    window.refreshCharacters = refreshCharacters;
+
     // Info message function
     function showMessage(msg) {
         messageDiv.textContent = msg;
     }
 
+    // Fetch message function
+    function showApiMessage(msg) {
+        apiFetchMessage.textContent = msg;
+    }
+
     // Fetch characters from GW2 API
     async function fetchCharacters(token) {
         const response = await fetch(`https://api.guildwars2.com/v2/characters?access_token=${token}`);
+
+        showApiMessage('Fetching characters...')
 
         if (!response.ok) {
             throw new Error('Failed to fetch characters. Check your API Key or Scope permissions.');
@@ -76,18 +145,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (const name of characters) {
             try {
+                showApiMessage(`Fetching character details for ${name}`);
+
                 // Fetch character details from gw2 api
                 const charResponse = await fetch(`https://api.guildwars2.com/v2/characters/${encodeURIComponent(name)}?access_token=${token}`);
                 if (!charResponse.ok) continue;
                 const charData = await charResponse.json();
 
+                showApiMessage(`Fetching character equipment tabs for ${name}`);
+
                 // Fetch equipment tabs from gw2 api
                 const equipmentResponse = await fetch (`https://api.guildwars2.com/v2/characters/${encodeURIComponent(name)}/equipmenttabs?access_token=${token}`);
                 const equipmentTabs = equipmentResponse.ok ? await equipmentResponse.json() : [];
 
+                showApiMessage(`Fetching character build tabs for ${name}`);
+
                 // Fetch build tabs from gw2 api
                 const buildResponse = await fetch (`https://api.guildwars2.com/v2/characters/${encodeURIComponent(name)}/buildtabs?access_token=${token}`);
                 const buildTabs = buildResponse.ok ? await buildResponse.json() : [];
+
+                showApiMessage(`Finishing character details for ${name}`);
 
                 // Get Jade Bot Power Core id, set as null if no power core equipped
                 let powerCoreId = null;
@@ -109,6 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     buildTabCount: buildTabs.length, // Build tabs unlocked
                     powerCore: powerCoreId // Jade Bot Power Core ID
                 };
+
+                showApiMessage('');
             } catch (error) {
                 console.error(`Failed to fetch details for ${name}:`, error);
             }

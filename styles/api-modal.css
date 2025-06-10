@@ -1,0 +1,25 @@
+/* Refreshing from API message */
+.refreshing-from-api-msg {
+    user-select: none;
+}
+
+/* Loading circle styling */
+.loader {
+    margin-top: 64px;
+    border: 16px solid var(--modal-bg);
+    border-top: 16px solid var(--accent);
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+
+#api-fetch-message {
+    margin-top: 10px;
+    color: var(--text-color);
+    min-height: 20px;
+}

@@ -5,6 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const progressionTrackerSection = document.getElementById('progression-tracker-section');
     const characterBtn = document.getElementById('modify-character-tracking');
+    const refreshBtn = document.getElementById('refresh-characters');
     const professionIcons = {
         Guardian: "https://wiki.guildwars2.com/images/c/cc/Guardian_icon.png",
         Revenant: "https://wiki.guildwars2.com/images/8/89/Revenant_icon.png",
@@ -59,6 +60,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         document.dispatchEvent(event);
     }
+
+    // Refresh button
+    refreshBtn.addEventListener('click', async () => {
+        const apiModal = document.getElementById('api-modal')
+        apiModal.classList.add('visible')
+        const success = await window.refreshCharacters();
+        if (success) {
+            renderProgressionTable();
+        }
+        apiModal.classList.remove('visible')
+    });
 
     // Render the progression table
     function renderProgressionTable() {

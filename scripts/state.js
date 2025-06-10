@@ -14,6 +14,10 @@ const GW2ProgressTracker = {
             tracked_characters: [],
             progression: {}
         };
+
+        // Upgrade progression data to match current static data
+        this.upgradeProgressionData();
+
         return this.data;
     },
 
@@ -76,6 +80,51 @@ const GW2ProgressTracker = {
 
     setProgression(character, progression) {
         this.data.progression[character] = progression;
+        this.saveData();
+    },
+
+    upgradeProgressionData() {
+        const staticData = this.staticData;
+        if (!staticData || !staticData.progression) return;
+
+        // For each character with progression data
+        Object.keys(this.data.progression).forEach(character => {
+            const charProgression = this.data.progression[character];
+
+            // For each content key in static data
+            Object.keys(staticData.progression).forEach(contentKey => {
+                const contentData = staticData.progression[contentKey];
+
+                // Initialize if missing
+                if (!charProgression[contentKey]) {
+                    charProgression[contentKey] = {
+                        story: Array(contentData.story.length).fill(false),
+                        maps: Array(contentData.maps.length).fill(false)
+                    };
+                } else {
+                    // Extend story array if needed
+                    const currentStory = charProgression[contentKey].story;
+                    if (currentStory.length < contentData.story.length) {
+                        const newLength = contentData.story.length - currentStory.length;
+                        charProgression[contentKey].story = [
+                            ...currentStory,
+                            ...Array(newLength).fill(false)
+                        ];
+                    }
+
+                    // Exend maps array if needed
+                    const currentMaps = charProgression[contentKey].maps;
+                    if (currentMaps.length < contentData.maps.length) {
+                        const newLength = contentData.maps.length - currentMaps.length;
+                        charProgression[contentKey].maps = [
+                            ...currentMaps,
+                            ...Array(newLength).fill(false)
+                        ];
+                    }
+                }
+            });
+        });
+
         this.saveData();
     }
 };

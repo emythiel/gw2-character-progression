@@ -12,6 +12,7 @@
 
     <!-- Section-specific Styles -->
     <link rel="stylesheet" href="./styles/api-token.css">
+    <link rel="stylesheet" href="./styles/api-modal.css">
     <link rel="stylesheet" href="./styles/progression-tracker.css">
     <link rel="stylesheet" href="./styles/progression-modal.css">
     <link rel="stylesheet" href="./styles/character-modal.css">
@@ -51,6 +52,10 @@
         <section id="progression-tracker-section" class="hidden">
             <a href="https://github.com/emythiel/gw2-character-progression" target="_blank"><img src="./resources/github_logo.png" id="github_logo"></a>
             <h1>Character Progression</h1>
+            <div>
+                <button id="modify-character-tracking">Track Characters</button>
+                <button id="refresh-characters">Refresh API</button>
+            </div>
 
             <div id="progression-table">
                 <table>
@@ -96,8 +101,8 @@
                         </tr>
                         <tr>
                             <th>
-                                <div class="th-character-btn">
-                                    <button id="modify-character-tracking">Track Characters</button>
+                                <div class="th-character">
+                                    <p>Characters</p>
                                 </div>
                             </th>
                             <th>
@@ -200,6 +205,16 @@
                 </div>
             </div>
         </div>
+
+        <!-- API Fetching Modal -->
+         <div id="api-modal" class="modal">
+            <div class="modal-content">
+                <h2 class="refreshing-from-api-msg">Refreshing from API</h2>
+                <p>This can take a bit depending on how many characters you have!</p>
+                <div class="loader" style="margin: auto;"></div>
+                <div id="api-fetch-message"></div>
+            </div>
+         </div>
     </main>
 </body>
 
