@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressionTrackerSection = document.getElementById('progression-tracker-section');
     const characterBtn = document.getElementById('modify-character-tracking');
     const refreshBtn = document.getElementById('refresh-characters');
+
     const professionIcons = {
         Guardian: "https://wiki.guildwars2.com/images/c/cc/Guardian_icon.png",
         Revenant: "https://wiki.guildwars2.com/images/8/89/Revenant_icon.png",
@@ -72,6 +73,30 @@ document.addEventListener('DOMContentLoaded', () => {
         apiModal.classList.remove('visible')
     });
 
+    // Export button
+    document.getElementById('export-data').addEventListener('click', exportData);
+
+
+    // Function to export data
+    function exportData() {
+        const data = localStorage.getItem('gw2_progression_data');
+        if (!data) {
+            alert('No data to export');
+            return;
+        }
+
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'gw2_progression_data.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
     // Render the progression table
     function renderProgressionTable() {
         const tbody = document.querySelector('#progression-table tbody');
@@ -97,6 +122,15 @@ document.addEventListener('DOMContentLoaded', () => {
             tbody.appendChild(row);
         });
     }
+
+    // Import button
+    document.getElementById('import-data-progression')?.addEventListener('click', () => {
+        if (window.handleImportData) {
+            window.handleImportData();
+        } else {
+            alert('Import function not available?');
+        }
+    })
 
     // Character cell function
     function createCharacterCell(character, charDetails) {
@@ -137,6 +171,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalSlots = bags.length;
         const maxSlots = staticData.bagSlots;
 
+        // Wrapper for tooltip positioning
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('bag-wrapper');
+
         const bagDisplay = document.createElement('div');
         bagDisplay.classList.add('bag-display');
 
@@ -151,9 +189,13 @@ document.addEventListener('DOMContentLoaded', () => {
         bagText.textContent = `${equipped}/${totalSlots}\n(${maxSlots})`;
         bagText.classList.add('bag-progress-text');
 
-        cell.appendChild(bagDisplay);
-        bagDisplay.appendChild(imageContainer);
-        imageContainer.append(bagIconElement, bagText)
+        // Tooltip
+        const tooltip = createBagTooltip(bags);
+
+        imageContainer.append(bagIconElement, bagText);
+        bagDisplay.append(imageContainer, tooltip);
+        wrapper.appendChild(bagDisplay);
+        cell.appendChild(wrapper);
 
         return cell;
     }
@@ -268,6 +310,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
             row.appendChild(cell);
         }
+    }
+
+    // HELPER: Create bag tooltip
+    function createBagTooltip(bags) {
+        const tooltip = document.createElement('div');
+        tooltip.classList.add('bag-tooltip');
+
+        const tooltipContent = document.createElement('div');
+        tooltipContent.classList.add('tooltip-content');
+
+        const tooltipTitle = document.createElement('div');
+        tooltipTitle.textContent = 'Equipped Bags:';
+        tooltipTitle.classList.add('tooltip-title');
+
+        const tooltipList = document.createElement('ul');
+        tooltipList.classList.add('bag-list');
+
+        // Add bag details
+        bags.forEach((bag, index) => {
+            const li = document.createElement('li');
+            li.textContent = bag ? `Bag ${index + 1}: ${bag.size} slots` : `Empty`;
+            tooltipList.appendChild(li);
+        });
+
+        tooltipContent.appendChild(tooltipList);
+        tooltip.appendChild(tooltipContent);
+
+        return tooltip;
     }
 
     // HELPER: Create template tab progress bar

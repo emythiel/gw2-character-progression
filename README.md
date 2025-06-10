@@ -17,12 +17,11 @@ Next, start selecting which characters you want to keep track of in the table.
 - Jade Bot shows the currently equipped Jade Bot Core Tier.
 - Template Tabs show the amount of build (top) and equipment (bottom) tabs that character has unlocked, out of the max.
 
-Maps currently cannot be tracked via the API, and Story completion is a bit iffy (eg. might not track properly if you replay a story step), so you have to mark those off manually.
-- Click on relevant cell, and check off whatever you need to, then save.
+Maps completion currently cannot be tracked via the API, and Story completion is a bit iffy (eg. might not track properly if you replay a story step), so you have to mark those off manually.
+- Click on relevant cell, and check off whatever you need to, then save.  
+  Your changes will be reflected in the progress bars.
+
 
 ### *Everything is stored locally!*
-This uses the browsers local storage, so nothing is shared. It does mean that you'll lose all your stored information if you reset your browser or something.
-
-### Todo:
-- Ability to refresh API key to retrieve newly created characters
-- Ability to export/import data
+This uses the browsers local storage, so nothing is shared. It does mean that you'll lose all your stored information if you reset your browser or something.  
+You can export / import a `.json` file in case you want to.

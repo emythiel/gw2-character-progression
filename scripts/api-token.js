@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const saveTokenBtn = document.getElementById('save-api-token');
     const messageDiv = document.getElementById('api-message');
     const apiFetchMessage = document.getElementById('api-fetch-message')
+    const importBtn = document.getElementById('import-data');
 
     // Save token button event
     saveTokenBtn.addEventListener('click', handleSaveToken);
@@ -65,6 +66,43 @@ document.addEventListener('DOMContentLoaded', () => {
             apiModal.classList.remove('visible')
         }
     }
+
+    // Import data from user .json file
+    importBtn.addEventListener('click', handleImportData);
+
+    function handleImportData() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const data = JSON.parse(event.target.result);
+
+                    // Basic validation
+                    if (!data || typeof data !== 'object' || !('api_key' in data) || !('characters' in data) || !('tracked_characters' in data) || !('progression' in data)) {
+                            throw new Error('Invalid data format');
+                    }
+
+                    // Save imported data
+                    localStorage.setItem('gw2_progression_data', JSON.stringify(data));
+                    alert('Data imported successfully! Page will reload.');
+                    location.reload();
+                } catch (error) {
+                    alert(`Import failed: ${error.message}`);
+                }
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    }
+
+    // Expose handleImportData for
+    window.handleImportData = handleImportData;
 
     // Refresh API data
     async function refreshCharacters() {
