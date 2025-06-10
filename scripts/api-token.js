@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Save token function
     async function handleSaveToken() {
+        const apiModal = document.getElementById('api-modal')
         const apiToken = apiTokenInput.value.trim();
 
         // Check if a token was entered, show error if not
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Attempt to fetch from GW2 API
         try {
+            apiModal.classList.add('visible')
             //showMessage('Fetching characters...');
             const characters = await fetchCharacters(apiToken);
 
@@ -55,10 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(`Saved API Token: ${apiToken}`)
 
             // Hide token section and show character tracker
+            apiModal.classList.remove('visible')
             apiTokenSection.classList.add('hidden');
             document.getElementById('progression-tracker-section').classList.remove('hidden');
         } catch (error) {
             showMessage(`Error: ${error.message}`);
+            apiModal.classList.remove('visible')
         }
     }
 

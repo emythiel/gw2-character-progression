@@ -1,3 +1,7 @@
+#api-modal {
+    text-align: center;
+}
+
 /* Refreshing from API message */
 .refreshing-from-api-msg {
     user-select: none;
@@ -22,4 +26,5 @@
     margin-top: 10px;
     color: var(--text-color);
     min-height: 20px;
+    text-align: start;
 }
