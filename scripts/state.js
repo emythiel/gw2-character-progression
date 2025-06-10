@@ -1,5 +1,6 @@
 const GW2ProgressTracker = {
     data: null,
+    staticData: GW2StaticData,
 
     init() {
         this.loadData();
@@ -9,8 +10,9 @@ const GW2ProgressTracker = {
         const saved = localStorage.getItem('gw2_progression_data');
         this.data = saved ? JSON.parse(saved) : {
             api_key: null,
-            characters: [],
-            tracked_characters: []
+            characters: {},
+            tracked_characters: [],
+            progression: {}
         };
         return this.data;
     },
@@ -37,6 +39,14 @@ const GW2ProgressTracker = {
         this.saveData();
     },
 
+    getCharacterDetails(name) {
+        return this.data.characters[name];
+    },
+
+    getStaticData() {
+        return this.staticData;
+    },
+
     getTrackedCharacters() {
         return this.data.tracked_characters;
     },
@@ -58,6 +68,15 @@ const GW2ProgressTracker = {
             return true;
         }
         return false;
+    },
+
+    getProgression(character) {
+        return this.data.progression[character] || {};
+    },
+
+    setProgression(character, progression) {
+        this.data.progression[character] = progression;
+        this.saveData();
     }
 };
 

@@ -1,0 +1,70 @@
+/* Progression Modal Styles */
+.progression-editor {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.progression-section {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.progression-section h4 {
+    margin-top: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+
+#story-list,
+#maps-list {
+    max-height: 400px;
+    overflow-y: auto;
+    margin: 10px 0;
+}
+
+#story-list li,
+#maps-list li {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#story-list li:last-child,
+#maps-list li:last-child {
+    border-bottom: none;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.check-all-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    background-color: #555;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.check-all-btn:hover {
+    background-color: #666;
+}

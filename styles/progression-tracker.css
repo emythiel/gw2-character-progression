@@ -1,0 +1,244 @@
+#progression-tracker-section {
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--bg-section-color);
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    max-width: fit-content;
+}
+
+/*
+    Primary table & header style
+*/
+#progression-table {
+    display: inline-block;
+    width: fit-content;
+    max-width: 100%;
+    padding-bottom: 32px;
+    overflow-x: auto;
+
+    & table {
+        border-collapse: collapse;
+
+        & th {
+            text-align: center;
+            vertical-align: text-bottom;
+
+            & img.th-content-logo {
+                    display: block;
+                    margin: 0 auto;
+                    max-height: 100px;
+                    width: auto;
+                    max-width: 100px;
+                    object-fit: contain;
+                }
+
+            & .th-character-btn {
+                width: 192px;
+                padding: 8px;
+            }
+
+            & .th-gear {
+                width: 80px;
+            }
+
+            & .th-content-title {
+                width: 128px;
+            }
+        }
+
+        & td {
+            padding: 8px;
+            border-top: 1px solid var(--border-color);
+        }
+    }
+}
+
+/*
+    Characters
+*/
+.character-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 192px;
+
+    & img {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* Bags */
+.bag-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.bag-image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.bag-icon {
+    width: 52px;
+    height: 52px;
+    display: block;
+    margin: 0 auto;
+}
+
+.bag-progress-text {
+    position: absolute;
+    bottom: 8px;
+    left: 2px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    user-select: none;
+}
+
+/* Jade Bot */
+.jade-bot-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.jade-bot-image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.jade-bot-icon {
+    width: 52px;
+    height: 52px;
+    display: block;
+    margin: 0 auto;
+}
+
+.jade-tier-number {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 0 1px black;
+    user-select: none;
+}
+
+/* Template Tabs */
+.template-tabs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.template-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Progress Bar with Content */
+.progress-bar {
+    height: 32px;
+    background-color: #555;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+}
+
+.progress-bar-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding-left: 4px;
+    font-size: 16px;
+    color: white;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+    z-index: 1;
+    gap: 4px;
+}
+
+/* Content Progress Container */
+.content-progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 112px;
+}
+
+.content-progress-cell {
+    border-radius: 10px;
+    transition: box-shadow, background-color 350ms;
+}
+
+.content-progress-cell:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Progress Bars */
+.tabs-progress {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.build-progress {
+    background-color: #9C27B0;
+}
+
+.equip-progress {
+    background-color: #673AB7;
+}
+
+.maps-progress {
+    height: 100%;
+    background-color: #2196F3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.7;
+}
+
+.story-progress {
+    height: 100%;
+    background-color: #4CAF50;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

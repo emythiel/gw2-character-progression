@@ -12,13 +12,18 @@
 
     <!-- Section-specific Styles -->
     <link rel="stylesheet" href="./styles/api-token.css">
-    <link rel="stylesheet" href="./styles/character-tracker.css">
+    <link rel="stylesheet" href="./styles/progression-tracker.css">
+    <link rel="stylesheet" href="./styles/progression-modal.css">
     <link rel="stylesheet" href="./styles/character-modal.css">
+
+    <!-- Data -->
+    <script defer src="./scripts/static-data.js"></script>
 
     <!-- Scripts -->
     <script defer src="./scripts/state.js"></script>
     <script defer src="./scripts/api-token.js"></script>
-    <script defer src="./scripts/character-tracker.js"></script>
+    <script defer src="./scripts/progression-tracker.js"></script>
+    <script defer src="./scripts/progression-modal.js"></script>
     <script defer src="./scripts/character-modal.js"></script>
     <script defer src="./scripts/main.js"></script>
 </head>
@@ -26,28 +31,124 @@
 <body>
     <main>
         <!-- API Key Input Section -->
-        <section id="api-token-section" class="hidden">
-            <h1>GW2 Character Tracker</h1>
+        <section id="api-token-section" >
+            <h1>GW2 Character Progression Tracker</h1>
             <div class="api-input">
-                <label for="api-token">API Token:</label>
+                <label for="api-token">API Key:</label>
                 <input type="text" id="api-token" placeholder="Enter your API key">
-                <button id="save-api-token">Save Token</button>
+                <button id="save-api-token">Continue</button>
             </div>
             <div id="api-message"></div>
+            <section id="api-information">
+                <p>To get an API Key:</p>
+                <p>1. Go to <a href="https://account.arena.net/applications" target="_blank">https://account.arena.net/applications</a> and log in.</p>
+                <p>2. Add a new key and ensure it has the <b>Account</b>, <b>Characters</b>, <b>Builds</b> and <b>Inventories</b> permissions.</p>
+            </section>
         </section>
 
-        <!-- Character Tracker Section -->
-        <section id="character-tracker-section" class="hidden">
-            <h2>Character Progression</h2>
-            <div id="tracked-characters">
-                <h3>Your Tracked Characters</h3>
-                <ul id="tracked-characters-list"></ul>
-                <button id="modify-character-tracking">Characters</button>
+        <!-- Main Progression Section -->
+        <section id="progression-tracker-section" class="hidden">
+            <h1>Character Progression</h1>
+
+            <div id="progression-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><!-- Character don't need image --></th>
+                            <th><!-- Bags don't need image --></th>
+                            <th><!-- Jade Bot don't need image --></th>
+                            <th><!-- Template Tabs don't need image --></th>
+                            <th>
+                                <img src="https://wiki.guildwars2.com/images/d/df/GW2Logo_new.png" class="th-content-logo">
+                            </th>
+                            <th>
+                                <img src="https://wiki.guildwars2.com/images/e/e8/Living_World_logo.png" class="th-content-logo">
+                            </th>
+                            <th>
+                                <img src="https://wiki.guildwars2.com/images/a/a4/Living_World_Season_2_Complete_Pack.png" class="th-content-logo">
+                            </th>
+                            <th>
+                                <img src="https://wiki.guildwars2.com/images/5/52/HoT_Texture_Centered_Trans.png" class="th-content-logo">
+                            </th>
+                            <th>
+                                <img src="https://wiki.guildwars2.com/images/b/b0/Living_World_Season_3_Complete_Pack.png" class="th-content-logo">
+                            </th>
+                            <th>
+                                <img src="https://wiki.guildwars2.com/images/0/0e/GW2-PoF_Texture_Centered_Trans.png" class="th-content-logo">
+                            </th>
+                            <th>
+                                <img src="https://wiki.guildwars2.com/images/0/05/Living_World_Season_4_Complete_Pack.png" class="th-content-logo">
+                            </th>
+                            <th>
+                                <img src="https://wiki.guildwars2.com/images/9/92/Prologue-_Bound_by_Blood.png" class="th-content-logo">
+                            </th>
+                            <th>
+                                <img src="https://wiki.guildwars2.com/images/c/cc/EoD_Texture_Trans.png" class="th-content-logo">
+                            </th>
+                            <th>
+                                <img src="https://wiki.guildwars2.com/images/4/44/Secrets_of_the_Obscure_logo.png" class="th-content-logo">
+                            </th>
+                            <th>
+                                <img src="https://wiki.guildwars2.com/images/6/60/Janthir_Wilds_logo.png" class="th-content-logo">
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <div class="th-character-btn">
+                                    <button id="modify-character-tracking">Track Characters</button>
+                                </div>
+                            </th>
+                            <th>
+                                <p class="th-gear">Bags</p>
+                            </th>
+                            <th>
+                                <p class="th-gear">Jade Bot</p>
+                            </th>
+                            <th>
+                                <p class="th-gear">Template Tabs</p>
+                            </th>
+                            <th>
+                                <p class="th-content-title">Core Tyria</p>
+                            </th>
+                            <th>
+                                <p class="th-content-title">Living World Season 1</p>
+                            </th>
+                            <th>
+                                <p class="th-content-title">Living World Season 2</p>
+                            </th>
+                            <th>
+                                <p class="th-content-title">Heart of Thorns</p>
+                            </th>
+                            <th>
+                                <p class="th-content-title">Living World Season 3</p>
+                            </th>
+                            <th>
+                                <p class="th-content-title">Path of Fire</p>
+                            </th>
+                            <th>
+                                <p class="th-content-title">Living World Season 4</p>
+                            </th>
+                            <th>
+                                <p class="th-content-title">Icebrood Saga</p>
+                            </th>
+                            <th>
+                                <p class="th-content-title">End of Dragons</p>
+                            </th>
+                            <th>
+                                <p class="th-content-title">Secrets of the Obscure</p>
+                            </th>
+                            <th>
+                                <p class="th-content-title">Janthir Wilds</p>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
             </div>
         </section>
 
         <!-- Character Selection Modal -->
-        <div id="character-modal" class="modal hidden">
+        <div id="character-modal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h3>Manage Tracked Characters</h3>
@@ -64,6 +165,36 @@
                         <h4>Available Characters</h4>
                         <ul id="available-characters-modal-list"></ul>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Story & Map Progression Selection Modal -->
+        <div id="progression-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-progression">&times;</span>
+                <h3 id="progression-modal-title">Progression Editor</h3>
+
+                <div class="progression-editor">
+                    <div class="progression-section">
+                        <div class="section-header">
+                            <h4>Story Chapters</h4>
+                            <button class="check-all-btn" data-type="story">Toggle All</button>
+                        </div>
+                        <ul id="story-list"></ul>
+                    </div>
+
+                    <div class="progression-section">
+                        <div class="section-header">
+                            <h4>Map Completion</h4>
+                            <button class="check-all-btn" data-type="maps">Toggle All</button>
+                        </div>
+                        <ul id="maps-list"></ul>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button id="save-progression">Save Changes</button>
                 </div>
             </div>
         </div>

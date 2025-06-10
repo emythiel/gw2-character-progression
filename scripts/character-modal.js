@@ -1,4 +1,6 @@
-// Character Modal Module - Updated for dual lists
+/*
+    Character selection modal
+*/
 document.addEventListener('DOMContentLoaded', () => {
     const characterModal = document.getElementById('character-modal');
     const closeModal = document.querySelector('.close');
@@ -7,12 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close modal handlers
     closeModal.addEventListener('click', () => {
-        characterModal.classList.add('hidden');
+        characterModal.classList.remove('visible');
     });
 
     window.addEventListener('click', (event) => {
         if (event.target === characterModal) {
-            characterModal.classList.add('hidden');
+            characterModal.classList.remove('visible');
         }
     });
 
@@ -23,22 +25,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openCharacterModal() {
         // Clear previous lists
-        trackedModalList.innerHTML = '';
-        availableModalList.innerHTML = '';
+        trackedModalList.replaceChildren();
+        availableModalList.replaceChildren();
 
-        const allCharacters = GW2ProgressTracker.getCharacters();
+        const allCharacters = Object.keys(GW2ProgressTracker.getCharacters());
         const trackedCharacters = GW2ProgressTracker.getTrackedCharacters();
 
         // Create tracked characters list
         if (trackedCharacters.length === 0) {
-            trackedModalList.innerHTML = '<li>No characters being tracked</li>';
+            const li = document.createElement('li');
+            li.textContent = 'No characters being tracked';
+            trackedModalList.appendChild(li);
         } else {
             trackedCharacters.forEach(character => {
                 const li = document.createElement('li');
-                li.innerHTML = `
-                    <span>${character}</span>
-                    <button class="remove-character-btn" data-character="${character}">Remove</button>
-                `;
+
+                const span = document.createElement('span');
+                span.textContent = character;
+                li.appendChild(span);
+
+                const button = document.createElement('button');
+                button.className = 'remove-character-btn';
+                button.dataset.character = character;
+                button.textContent = 'Untrack';
+                li.appendChild(button);
+
                 trackedModalList.appendChild(li);
             });
         }
@@ -49,15 +60,24 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
         if (availableCharacters.length === 0) {
-            availableModalList.innerHTML = '<li>All characters are being tracked</li>';
+            const li = document.createElement('li');
+            li.textContent = 'All characters are being tracked';
+            availableModalList.appendChild(li);
         } else {
             availableCharacters.forEach(character => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <span>${character}</span>
-                    <button class="add-character-btn" data-character="${character}">Add</button>
-                `;
-                availableModalList.appendChild(li);
+               const li = document.createElement('li');
+
+               const span = document.createElement('span');
+               span.textContent = character;
+               li.appendChild(span);
+
+               const button = document.createElement('button');
+               button.className = 'add-character-btn';
+               button.dataset.character = character;
+               button.textContent = 'Track';
+               li.appendChild(button);
+
+               availableModalList.appendChild(li);
             });
         }
 
@@ -71,13 +91,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Show modal
-        characterModal.classList.remove('hidden');
+        characterModal.classList.add('visible');
     }
 
     function handleAddCharacter(e) {
         const character = e.target.dataset.character;
         if (GW2ProgressTracker.addTrackedCharacter(character)) {
-            // Dispatch event to notify about the change
+            // Init progression data
+            const staticData = GW2ProgressTracker.getStaticData();
+            initializeProgression(character, staticData);
+
+            // Dispatch event to notify about change
             const event = new CustomEvent('trackedCharactersChanged');
             document.dispatchEvent(event);
 
@@ -96,5 +120,18 @@ document.addEventListener('DOMContentLoaded', () => {
             // Refresh modal to show updated lists
             openCharacterModal();
         }
+    }
+
+    function initializeProgression(character, staticData) {
+        const progression = {};
+
+        for (const [key, content] of Object.entries(staticData.progression)) {
+            progression[key] = {
+                story: Array(content.story.length).fill(false),
+                maps: Array(content.maps.length).fill(false)
+            };
+        }
+
+        GW2ProgressTracker.setProgression(character, progression);
     }
 });
