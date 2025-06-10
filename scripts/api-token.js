@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const trackedCharacters = GW2ProgressTracker.getTrackedCharacters();
 
             for (const character of trackedCharacters) {
-                if (!GW2ProgressTracker.getProgression(character)) {
+                // Only initialize if no progression exists
+                if (!GW2ProgressTracker.getProgression(character) || Object.keys(GW2ProgressTracker.getProgression(character)).length === 0) {
                     initializeProgression(character, staticData);
                 }
             }

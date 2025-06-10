@@ -97,9 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleAddCharacter(e) {
         const character = e.target.dataset.character;
         if (GW2ProgressTracker.addTrackedCharacter(character)) {
-            // Init progression data
-            const staticData = GW2ProgressTracker.getStaticData();
-            initializeProgression(character, staticData);
+            // Only initialize if no progression exists
+            if (!GW2ProgressTracker.getProgression(character) || Object.keys(GW2ProgressTracker.getProgression(character)).length === 0) {
+                const staticData = GW2ProgressTracker.getStaticData();
+                initializeProgression(character, staticData);
+            }
 
             // Dispatch event to notify about change
             const event = new CustomEvent('trackedCharactersChanged');

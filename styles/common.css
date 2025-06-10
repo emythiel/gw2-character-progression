@@ -42,6 +42,17 @@ h1, h2 {
     text-align: center;
 }
 
+#github_logo {
+    width: 75px;
+    opacity: 0.3;
+    transition: opacity 350ms;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+}
+
 /*
     Common modal styling
 */

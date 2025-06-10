@@ -5,10 +5,11 @@
     background-color: var(--bg-section-color);
     margin: 0 auto;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
     max-width: fit-content;
+
+    & h1 {
+        text-align: start;
+    }
 }
 
 /*
@@ -44,6 +45,10 @@
 
             & .th-gear {
                 width: 80px;
+            }
+
+            & .th-template-tabs {
+                widtH: 100px;
             }
 
             & .th-content-title {
