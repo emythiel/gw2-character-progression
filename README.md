@@ -2,7 +2,7 @@
 A super simple way to track some progress for Guild Wars 2 characters.
 
 Link:  
-**https://emythiel.github.io/gw2-character-progression/**
+**<a href="https://emythiel.github.io/gw2-character-progression/" target="_blank">https://emythiel.github.io/gw2-character-progression/</a>**
 
 I was too lazy to make a spreadsheet, so I logically spent more time and effort making this.
 
