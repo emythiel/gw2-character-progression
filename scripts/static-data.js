@@ -310,6 +310,17 @@ const GW2StaticData = {
                 "Mistburned Barrens",
                 "Bava Nisos"
             ]
+        },
+
+        /* VISIONS OF ETERNITY */
+        voe: {
+            name: "Visions of Eternity",
+            story: [
+
+            ],
+            maps: [
+
+            ]
         }
     }
 
