@@ -316,10 +316,15 @@ const GW2StaticData = {
         voe: {
             name: "Visions of Eternity",
             story: [
-
+                "Prologue: On the Sly",
+                "1. Unscheduled Departures",
+                "2. Solid Ground",
+                "3. Eyes, Ears, and Arms",
+                "4. Truths Unearthed"
             ],
             maps: [
-
+                "Shipwreck Strand",
+                "Starlit Weald"
             ]
         }
     }
