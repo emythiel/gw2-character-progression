@@ -320,7 +320,8 @@ const GW2StaticData = {
                 "1. Unscheduled Departures",
                 "2. Solid Ground",
                 "3. Eyes, Ears, and Arms",
-                "4. Truths Unearthed"
+                "4. Truths Unearthed",
+                "5. Beneath the Canopy"
             ],
             maps: [
                 "Shipwreck Strand",
