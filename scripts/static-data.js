@@ -328,7 +328,8 @@ const GW2StaticData = {
             ],
             maps: [
                 "Shipwreck Strand",
-                "Starlit Weald"
+                "Starlit Weald",
+                "Eternity's Garden"
             ]
         }
     }
