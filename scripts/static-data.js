@@ -324,7 +324,12 @@ const GW2StaticData = {
                 "5. Beneath the Canopy",
                 "6. Ruins of the Old World",
                 "7. Fumbling in the Dark",
-                "8. Path of Divinity"
+                "8. Path of Divinity",
+                "9. On the Threshold",
+                "10. Within Your Grasp",
+                "11. Divitium Nava",
+                "12. A Bold Strategy",
+                "13. So it is Written"
             ],
             maps: [
                 "Shipwreck Strand",
