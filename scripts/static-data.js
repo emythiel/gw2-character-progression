@@ -329,12 +329,19 @@ const GW2StaticData = {
                 "10. Within Your Grasp",
                 "11. Divitium Nava",
                 "12. A Bold Strategy",
-                "13. So it is Written"
+                "13. So it is Written",
+                "14. Deeper Revelations",
+                "15. Under Pressure",
+                "16. Ripples in the Pond",
+                "17. The Burden of Seeing",
+                "18. So Be It",
+                "19. Everything That We Are"
             ],
             maps: [
                 "Shipwreck Strand",
                 "Starlit Weald",
-                "Eternity's Garden"
+                "Eternity's Garden",
+                "Leyspring Hollows"
             ]
         }
     }
